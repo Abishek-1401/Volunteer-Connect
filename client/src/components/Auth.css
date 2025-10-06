@@ -1,0 +1,227 @@
+/* src/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap');
+
+:root {
+  --color-dark-purple: #3B0270;
+  --color-bright-violet: #6F00FF;
+  --color-light-gray: #f3f4f6;
+  --color-text-primary: #475569;
+  --color-text-secondary: #64748b;
+  --color-border: #E2E8F0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--color-light-gray);
+  line-height: 1.6;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 26rem;
+  background: #fff;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  animation: fadeIn 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.image-slider-panel {
+  position: relative;
+  width: 100%;
+  min-height: 15rem;
+  background: linear-gradient(135deg, var(--color-bright-violet), var(--color-dark-purple));
+}
+
+.slider-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+
+.slider-image.active {
+  opacity: 1;
+}
+
+.form-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 2rem;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 1.5rem auto;
+  width: 110px;
+}
+
+.logo img {
+  width: 100%;
+}
+
+.form-panel h2 {
+  text-align: center;
+  color: var(--color-dark-purple);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-border);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  border-color: var(--color-bright-violet);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(111, 0, 255, 0.1);
+}
+
+.password-group {
+  position: relative;
+}
+
+.eye-button {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eye-button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke: var(--color-text-secondary);
+}
+
+.button {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: none;
+  background: var(--color-bright-violet);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(111, 0, 255, 0.25);
+}
+
+.signin-link {
+  display: block;
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.signin-link span {
+  color: var(--color-bright-violet);
+  font-weight: 600;
+  margin-left: 0.25rem;
+}
+
+@media (min-width: 1024px) {
+  .card {
+    flex-direction: row;
+    max-width: 64rem;
+  }
+  .image-slider-panel {
+    width: 55%;
+    min-height: auto;
+  }
+  .form-panel {
+    width: 45%;
+    padding: 4rem;
+  }
+}
+
+/* src/App.css */
+
+/* ... (all your existing styles) ... */
+
+/* --- Password Strength Checker --- */
+.password-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0 0;
+  font-size: 0.875rem;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #a0aec0; /* Default gray color */
+  transition: color 0.3s ease;
+}
+
+.checklist-item.satisfied {
+  color: #48bb78; /* Green color when satisfied */
+  text-decoration: line-through;
+}
+
+.checklist-item svg {
+  width: 1rem;
+  height: 1rem;
+}

@@ -1,0 +1,114 @@
+/* src/components/CallToAction.css */
+
+.cta-final-section {
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+
+  /* Other component styles */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-off-white);
+  padding: 100px 1rem;
+  text-align: center;
+  color: var(--color-dark-purple);
+  position: relative; /* Needed for absolute positioning of pseudo-elements */
+  overflow: hidden; /* Ensures background elements don't spill out */
+  z-index: 1; 
+  
+  /* Add a performance hint to the browser */
+  will-change: transform, opacity;
+}
+
+/* The visible state */
+.cta-final-section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cta-final-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 4.2rem; 
+  margin-bottom: 1.8rem;
+  color: var(--color-dark-purple);
+  max-width: 900px;
+  position: relative; 
+  z-index: 2; 
+}
+
+.cta-final-subtitle {
+  font-size: 1.7rem; 
+  margin-bottom: 3.5rem; 
+  opacity: 0.85; 
+  max-width: 800px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensure the button is also above the background elements */
+.cta-final-section .cta-button {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* --- Animated Background Element --- */
+.cta-final-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 700px; 
+  height: 700px; 
+  background: radial-gradient(circle, var(--color-light-lavender) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  
+  /* Performance optimized blur */
+  filter: blur(50px);
+  
+  opacity: 0.6;
+  z-index: 0; 
+  transform: translate(-50%, -50%) scale(1);
+  animation: pulseScale 15s ease-in-out infinite alternate,
+             rotateSubtle 30s linear infinite;
+  
+  /* Add a performance hint for the pseudo-element too */
+  will-change: transform, filter, opacity;
+}
+
+/* Keyframe for subtle scaling pulse */
+@keyframes pulseScale {
+  0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.7; }
+  100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
+}
+
+/* Keyframe for slow, subtle rotation */
+@keyframes rotateSubtle {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 1024px) {
+  .cta-final-title { font-size: 3.5rem; }
+  .cta-final-subtitle { font-size: 1.4rem; }
+  .cta-final-section::before { width: 500px; height: 500px; filter: blur(100px); }
+}
+
+@media (max-width: 768px) {
+  .cta-final-title { font-size: 2.8rem; margin-bottom: 1.2rem; }
+  .cta-final-subtitle { font-size: 1.1rem; margin-bottom: 2.5rem; }
+  .cta-final-section::before { width: 400px; height: 400px; filter: blur(80px); }
+}
+
+@media (max-width: 480px) {
+  .cta-final-title { font-size: 2.2rem; }
+  .cta-final-subtitle { font-size: 1rem; }
+  .cta-final-section::before { width: 300px; height: 300px; filter: blur(60px); }
+}

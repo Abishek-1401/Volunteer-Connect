@@ -1,0 +1,123 @@
+/* src/components/Hero.css */
+
+.hero-section {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: var(--color-off-white);
+  padding: 4rem 1rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-dark-purple);
+}
+
+.logo-icon {
+  font-size: 2.2rem;
+  margin-right: 0.5rem;
+  color: var(--color-bright-violet);
+}
+
+.hero-content {
+  max-width: 900px;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 4.5rem;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: var(--color-dark-purple);
+  position: relative;
+  z-index: 2;
+}
+
+.highlight-text {
+  position: relative;
+  z-index: 1;
+}
+
+.highlight-text::after {
+  content: '';
+  position: absolute;
+  bottom: 0.1em;
+  left: -0.5em;
+  right: -0.5em;
+  height: 0.35em;
+  background-color: var(--color-accent-yellow);
+  z-index: -1;
+  transform: rotate(-2deg);
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: var(--color-dark-purple);
+  margin-bottom: 3rem;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.hero-shape-accent {
+  position: absolute;
+  top: 10%;
+  right: -5%;
+  width: 300px;
+  height: 250px;
+  background-color: var(--color-light-lavender);
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.7;
+  z-index: 1;
+  animation: floatShape 10s ease-in-out infinite alternate;
+}
+
+@keyframes floatShape {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, 30px) scale(1.05); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+  .hero-shape-accent {
+    width: 200px;
+    height: 180px;
+    top: 15%;
+    right: -10%;
+    filter: blur(60px);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  .hero-shape-accent {
+    width: 150px;
+    height: 130px;
+    top: 20%;
+    right: -15%;
+    filter: blur(40px);
+  }
+}

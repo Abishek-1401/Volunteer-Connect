@@ -1,0 +1,28 @@
+/* src/App.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap');
+
+:root {
+  --color-dark-purple: #3b0270;
+  --color-bright-violet: #6f00ff;
+  --color-light-lavender: #e9b3fb;
+  --color-off-white: #fff1f1;
+  --color-accent-yellow: #FFC107;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-off-white);
+  color: var(--color-dark-purple);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--color-dark-purple);
+  line-height: 1.2;
+}

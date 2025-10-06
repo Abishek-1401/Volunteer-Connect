@@ -1,0 +1,54 @@
+/* src/components/Vision.css */
+
+.vision-section {
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+
+  /* Other component styles */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: var(--color-light-lavender);
+  color: var(--color-dark-purple);
+  padding: 100px 1rem;
+}
+
+/* The visible state */
+.vision-section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.vision-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.vision-section .section-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: var(--color-dark-purple);
+}
+
+.vision-description {
+  font-size: 1.3rem;
+  line-height: 1.8;
+  opacity: 0.9;
+}
+
+.vision-description strong {
+  color: var(--color-bright-violet);
+}
+
+@media (max-width: 768px) {
+  .vision-section .section-title {
+    font-size: 2.5rem;
+  }
+  .vision-description {
+    font-size: 1.1rem;
+  }
+}
