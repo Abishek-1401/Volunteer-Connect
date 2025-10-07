@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-scroll"; // Import the Link component
 import "./NavBar.css";
-import fullLogo from "../assets/logo.png";
-import simpleLogo from "../assets/logo_mini.png";
+import fullLogo from "../../assets/logo.png";
+import simpleLogo from "../../assets/logo_mini.png";
 
 const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);

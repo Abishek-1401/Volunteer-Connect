@@ -19,7 +19,8 @@ const CallToAction = () => {
       <p className="cta-final-subtitle">
         Join ImpactConnect today and become part of a growing community dedicated to social good.
       </p>
-      <a href="./Signup"><button className="cta-button">Get Started Now</button></a>
+      <a href=".
+      /Signup"><button className="cta-button">Get Started Now</button></a>
     </section>
   );
 };

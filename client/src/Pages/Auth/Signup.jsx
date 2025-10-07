@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 // Your asset imports
-import logoImage from '../assets/logo.png';
-import sliderImg1 from '../assets/slider1.jpg';
-import sliderImg2 from '../assets/slider2.jpg';
-import EyeOpenIcon from '../assets/eye.svg';
-import EyeClosedIcon from '../assets/hidden_eye.svg';
+import logoImage from '../../assets/logo.png';
+import sliderImg1 from '../../assets/slider1.jpg';
+import sliderImg2 from '../../assets/slider2.jpg';
+import EyeOpenIcon from '../../assets/eye.svg';
+import EyeClosedIcon from '../../assets/hidden_eye.svg';
 
 import './Auth.css';
 

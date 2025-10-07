@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap'; // Assuming you have GSAP installed
-import fullLogo from '../assets/logo.png';
+import fullLogo from '../../assets/logo.png';
 import './Preloader.css';
 
 const Preloader = () => {

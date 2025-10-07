@@ -2,7 +2,6 @@
 
 import React from 'react';
 import useInView from '../../hooks/useInView';
-import './SharedLanding.css';
 import './Vision.css';
 
 const Vision = () => {

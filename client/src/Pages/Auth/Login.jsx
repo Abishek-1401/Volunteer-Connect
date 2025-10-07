@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import logoImage from '../assets/logo.png';
-import sliderImg1 from '../assets/slider1.jpg';
-import sliderImg2 from '../assets/slider2.jpg';
-import sliderImg3 from '../assets/slider3.jpg';
-import EyeOpenIcon from '../assets/eye.svg';
-import EyeClosedIcon from '../assets/hidden_eye.svg';
+// Your asset imports
+import logoImage from '../../assets/logo.png';
+import sliderImg1 from '../../assets/slider1.jpg';
+import sliderImg2 from '../../assets/slider2.jpg';
+import EyeOpenIcon from '../../assets/eye.svg';
+import EyeClosedIcon from '../../assets/hidden_eye.svg';
 
 import './Auth.css';
 
-const sliderImages = [sliderImg1, sliderImg2, sliderImg3];
+const sliderImages = [sliderImg1, sliderImg2];
+
 
 const Login = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);

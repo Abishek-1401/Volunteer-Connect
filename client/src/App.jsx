@@ -1,13 +1,9 @@
-// src/App.jsx
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import Landing from './components/Landing';
-import Signup from './components/Signup';
-import Login from './components/Login';
-
-import './App.css';
+import Landing from './pages/Landing/Landing';
+import Signup from './pages/Auth/Signup';
+import Login from './pages/Auth/Login';
+import HomePage from './Pages/HomePage/HomePage'; // Import the new page
 
 function App() {
   return (
@@ -16,6 +12,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<HomePage />} /> {/* Add this route */}
       </Routes>
     </BrowserRouter>
   );
