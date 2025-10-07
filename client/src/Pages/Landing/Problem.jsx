@@ -1,7 +1,7 @@
 // src/components/Problem.jsx
 
 import React from 'react';
-import useInView from '../hooks/useInView';
+import useInView from '../../hooks/useInView';
 import './SharedLanding.css';
 import './Problem.css';
 

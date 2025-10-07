@@ -2,7 +2,7 @@
 // No changes from previous version, just for context
 
 import React from 'react';
-import useInView from '../hooks/useInView';
+import useInView from '../../hooks/useInView';
 import './CallToAction.css';
 import './SharedLanding.css';
 

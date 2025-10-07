@@ -1,7 +1,7 @@
 // src/components/HowItWorks.jsx
 
 import React from 'react';
-import useInView from '../hooks/useInView';
+import useInView from '../../hooks/useInView';
 import './SharedLanding.css';
 import './HowItWorks.css';
 
