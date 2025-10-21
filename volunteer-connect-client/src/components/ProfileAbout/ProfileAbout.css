@@ -1,0 +1,37 @@
+.profile-about-card {
+  background-color: var(--color-white);
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.about-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.about-bio {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+}
+
+.about-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-tag {
+  background-color: var(--color-light-accent);
+  color: var(--color-dark-shade);
+  padding: 6px 14px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}

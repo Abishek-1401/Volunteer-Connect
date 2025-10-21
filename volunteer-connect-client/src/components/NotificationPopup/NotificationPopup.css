@@ -1,0 +1,77 @@
+.notification-popup {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 360px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+
+  /* Glassmorphism */
+  background: var(--glass-bg-popup);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 1001;
+}
+
+.notification-header {
+  padding: 15px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.notification-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.notification-list {
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.notification-item {
+  display: flex;
+  gap: 12px;
+  padding: 15px;
+  border-bottom: 1px solid var(--glass-border);
+  transition: background-color 0.2s ease;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item:hover {
+  background-color: var(--glass-border);
+}
+
+.notification-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.notification-text p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.notification-text p strong {
+  font-weight: 600;
+}
+
+.notification-text p em {
+  font-style: normal;
+  color: var(--color-text-secondary);
+}
+
+.notification-time {
+  font-size: 0.8rem;
+  color: var(--color-primary-brand);
+  font-weight: 500;
+}

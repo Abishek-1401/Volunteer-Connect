@@ -1,0 +1,99 @@
+.chat-info-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.chat-info-panel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.info-header {
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.info-avatar-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.info-group-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  background: rgba(128, 128, 128, 0.2);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.info-header h3 {
+  margin: 0 0 8px;
+  color: var(--color-text-primary);
+}
+
+.info-header p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.info-members-section h4 {
+  text-align: left;
+  margin-bottom: 15px;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.info-member-list {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.info-member-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.info-actions {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.leave-group-btn {
+  width: 100%;
+  background: none;
+  border: 1px solid #e53935;
+  color: #e53935;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.leave-group-btn:hover {
+  background-color: #e53935;
+  color: white;
+}

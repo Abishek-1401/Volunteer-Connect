@@ -1,0 +1,101 @@
+.groups-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.groups-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.groups-header h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.create-group-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-primary-brand);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+.create-group-btn:hover {
+  opacity: 0.9;
+}
+
+.group-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.group-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.group-card-item {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.group-card-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 15px;
+  border-radius: 15px;
+  background: rgba(128, 128, 128, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  color: var(--color-text-secondary);
+}
+
+.group-card-name {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.group-card-members {
+  margin: 5px 0 15px;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.group-card-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex-grow: 1; /* Pushes the button to the bottom */
+}
+
+.group-card-join-btn {
+  width: 100%;
+  background-color: var(--color-primary-brand);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-align: center;
+}

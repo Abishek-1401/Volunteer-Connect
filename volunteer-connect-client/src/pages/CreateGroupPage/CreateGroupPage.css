@@ -1,0 +1,41 @@
+/* Note: Many styles here are similar to EditProfilePage.css */
+.create-group-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+.create-group-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 30px 40px;
+}
+.create-group-card h1 { margin-top: 0; text-align: center; margin-bottom: 30px; }
+.form-group { margin-bottom: 25px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--color-text-secondary); }
+.form-group input, .form-group textarea {
+  width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--color-border);
+  background-color: rgba(128, 128, 128, 0.2); color: var(--color-text-primary); font-size: 1rem; font-family: inherit;
+}
+.form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--color-primary-brand); }
+.form-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; }
+.form-actions button, .form-actions a { padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 1rem; }
+.cancel-btn { background: none; border: 1px solid var(--color-text-secondary); color: var(--color-text-secondary); }
+.save-btn { background-color: var(--color-primary-brand); color: white; border: none; }
+
+/* --- Styles for Privacy Radio Buttons --- */
+.privacy-options { display: flex; flex-direction: column; gap: 15px; }
+.privacy-option {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  border: 2px solid var(--color-border);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.privacy-option input[type="radio"] { display: none; }
+.privacy-option.selected { border-color: var(--color-primary-brand); }
+.privacy-option svg { font-size: 1.5rem; color: var(--color-text-secondary); }
+.privacy-option.selected svg { color: var(--color-primary-brand); }
+.privacy-text strong { display: block; }
+.privacy-text span { font-size: 0.9rem; color: var(--color-text-secondary); }

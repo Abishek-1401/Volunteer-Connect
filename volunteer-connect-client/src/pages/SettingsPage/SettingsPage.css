@@ -1,0 +1,13 @@
+.settings-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+.settings-container h1 { font-size: 2.5rem; margin-bottom: 30px; }
+.settings-layout { display: grid; grid-template-columns: 200px 1fr; gap: 30px; }
+.settings-nav { display: flex; flex-direction: column; gap: 10px; }
+.settings-nav button { background: none; border: none; text-align: left; padding: 12px 15px; font-size: 1rem; font-weight: 600; color: var(--color-text-secondary); border-radius: 6px; cursor: pointer; }
+.settings-nav button.active { background-color: var(--color-primary-brand); color: white; }
+.settings-content { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 30px; }
+.settings-section { border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; margin-bottom: 20px; }
+.settings-section:last-child { border-bottom: none; margin-bottom: 0; }
+.settings-section p { color: var(--color-text-secondary); }
+.danger-zone .deactivate-btn, .danger-zone .delete-btn { border-radius: 6px; padding: 10px 15px; font-weight: 600; cursor: pointer; border: none; }
+.deactivate-btn { background-color: #ffc107; color: black; }
+.delete-btn { background-color: #e53935; color: white; }

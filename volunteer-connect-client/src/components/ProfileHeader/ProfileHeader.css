@@ -1,0 +1,71 @@
+.profile-header-card {
+  background-color: var(--color-white);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  overflow: hidden; /* Important for keeping rounded corners with an image */
+  margin-bottom: 20px;
+}
+
+.cover-photo-container {
+  height: 200px;
+  background-color: var(--color-dark-shade);
+}
+
+.cover-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-details {
+  position: relative;
+  padding: 0 24px 24px;
+}
+
+.profile-picture-page {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid var(--color-white);
+  
+  /* Positioning */
+  position: absolute;
+  top: -75px; /* Pulls it up halfway over the cover photo */
+}
+
+.profile-text-info {
+  padding-top: 80px; /* Pushes the text down to clear the profile picture */
+}
+
+.profile-name-page {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.profile-title-page {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin-top: 8px;
+}
+
+/* Add this new rule to the end of your file */
+.edit-profile-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: 1px solid var(--color-primary-brand);
+  color: var(--color-primary-brand);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.edit-profile-btn:hover {
+  background-color: var(--color-primary-brand);
+  color: white;
+}

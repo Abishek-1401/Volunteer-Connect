@@ -1,0 +1,45 @@
+.search-container {
+  max-width: 800px;
+  margin: 112px auto 0; /* Pushed down below the sticky navbar */
+  padding: 20px;
+}
+
+.search-title {
+  color: var(--color-text-primary);
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.search-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.search-tabs .tab-button {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  background: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-tabs .tab-button.active {
+  background-color: var(--color-primary-brand);
+  color: white;
+}
+
+.search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

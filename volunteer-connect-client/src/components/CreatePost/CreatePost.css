@@ -1,0 +1,96 @@
+/* --- Main Glassmorphism Card --- */
+.create-post-container {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* --- Header with avatar and text area --- */
+.create-post-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 10px;
+}
+
+.create-post-avatar {
+  font-size: 2.5rem;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+
+.create-post-textarea {
+  flex-grow: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  padding-top: 12px;
+  font-size: 1.2rem;
+  font-family: inherit;
+  color: var(--color-text-primary);
+  resize: none;
+  min-height: 40px; /* Give it a minimum height */
+}
+
+.create-post-textarea::placeholder {
+  color: var(--color-text-secondary);
+}
+
+/* --- Action buttons below the divider --- */
+.create-post-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* This is the hidden file input */
+.create-post-actions input[type="file"] {
+  display: none;
+}
+
+/* This styles the "Photo" button (which is a label) */
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  transition: background-color 0.2s ease;
+}
+
+.action-button svg {
+  color: #45bd62; /* Green color for photo icon */
+  font-size: 1.5rem;
+}
+
+.action-button:hover {
+  background-color: var(--glass-border);
+}
+
+.post-button {
+  background-color: var(--color-primary-brand);
+  color: white;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.post-button:hover {
+  opacity: 0.9;
+}

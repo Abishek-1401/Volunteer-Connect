@@ -1,0 +1,21 @@
+.feed {
+  /* This enables vertical scrolling when content overflows */
+  overflow-y: auto;
+  
+  /* Adjusted height for the detached navbar */
+  height: calc(100vh - 96px);
+
+  /* --- Hide scrollbar for different browsers --- */
+  
+  /* For Internet Explorer and Edge */
+  -ms-overflow-style: none;
+  
+  /* For Firefox */
+  scrollbar-width: none;
+  margin-top: 20px;
+}
+
+/* For Chrome, Safari, and Opera */
+.feed::-webkit-scrollbar {
+  display: none;
+}

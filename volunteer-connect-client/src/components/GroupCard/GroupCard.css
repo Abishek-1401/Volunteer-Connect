@@ -1,0 +1,47 @@
+/* The styling for GroupCard can be nearly identical to UserCard */
+.group-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 12px 0 var(--glass-shadow);
+}
+
+.group-card-avatar {
+  font-size: 3rem;
+  color: var(--color-text-secondary);
+}
+
+.group-card-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.group-card-name {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.group-card-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.group-card-button {
+  background-color: var(--color-primary-brand);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.group-card-button:hover {
+  opacity: 0.9;
+}

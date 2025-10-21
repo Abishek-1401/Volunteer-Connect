@@ -1,0 +1,56 @@
+.message-input-container {
+  position: relative;
+}
+
+.emoji-picker-wrapper {
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 10px;
+}
+
+.message-input-form-new {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.message-input-form-new input[type="text"] {
+  flex-grow: 1;
+  background: rgba(128, 128, 128, 0.2);
+  border: none;
+  outline: none;
+  padding: 12px;
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  font-size: 1rem;
+}
+
+.message-input-form-new .icon-button {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message-input-form-new .send-btn {
+  background-color: var(--color-primary-brand);
+  color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+}

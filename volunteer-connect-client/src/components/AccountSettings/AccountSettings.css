@@ -1,0 +1,50 @@
+.settings-section {
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.settings-section h3 {
+  margin-top: 0;
+}
+
+.settings-section p {
+  color: var(--color-text-secondary);
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.danger-zone {
+  border-left: 3px solid #e53935;
+  padding-left: 20px;
+}
+
+.deactivate-btn,
+.delete-btn {
+  border-radius: 6px;
+  padding: 10px 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s ease;
+}
+
+.deactivate-btn:hover,
+.delete-btn:hover {
+  opacity: 0.9;
+}
+
+.deactivate-btn {
+  background-color: #ffc107;
+  color: black;
+}
+
+.delete-btn {
+  background-color: #e53935;
+  color: white;
+}

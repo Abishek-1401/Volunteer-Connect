@@ -1,0 +1,75 @@
+.project-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.project-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.organizer-avatar {
+  font-size: 2.5rem;
+  color: var(--color-text-secondary);
+}
+.organizer-name {
+  display: block;
+  font-weight: 600;
+}
+.posted-time {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+.project-card-title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.project-card-desc {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+.project-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag-item {
+  background-color: var(--color-primary-brand);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.project-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--glass-border);
+  padding-top: 15px;
+}
+.location-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+.details-button {
+  background-color: var(--color-primary-brand);
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+.details-button:hover {
+  opacity: 0.9;
+}

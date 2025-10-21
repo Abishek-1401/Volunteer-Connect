@@ -1,0 +1,104 @@
+.conversation-list-panel {
+  display: flex;
+  flex-direction: column;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.convo-list-header {
+  padding: 20px;
+}
+.convo-list-header h2 {
+  margin: 0 0 15px 0;
+}
+.convo-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(128, 128, 128, 0.2);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.convo-search-bar input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text-primary);
+  width: 100%;
+}
+.convo-items-container {
+  flex-grow: 1;
+  overflow-y: auto; /* Hide scrollbar styles... */
+}
+.convo-item {
+  display: flex;
+  gap: 15px;
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-top: 1px solid var(--glass-border);
+}
+.convo-item:hover {
+  background-color: var(--glass-border);
+}
+.convo-item.active {
+  background-color: var(--color-primary-brand);
+  color: white;
+}
+.convo-item.active .convo-name,
+.convo-item.active .convo-last-message,
+.convo-item.active .convo-time {
+  color: white;
+  opacity: 1;
+}
+.convo-avatar-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+.convo-avatar-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.convo-group-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  background: rgba(128, 128, 128, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+}
+.online-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  background-color: #45bd62;
+  border-radius: 50%;
+  border: 2px solid var(--glass-bg);
+}
+.convo-details {
+  flex-grow: 1;
+  overflow: hidden;
+}
+.convo-name {
+  font-weight: 600;
+}
+.convo-last-message {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.convo-time {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}

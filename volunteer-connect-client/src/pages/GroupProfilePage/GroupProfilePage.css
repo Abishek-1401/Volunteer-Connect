@@ -1,0 +1,83 @@
+.group-profile-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.group-profile-header {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.group-header-icon {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 20px;
+  border-radius: 20px;
+  background: rgba(128, 128, 128, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  color: var(--color-text-secondary);
+}
+
+.group-profile-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.group-profile-header p {
+  margin: 10px 0 20px;
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+}
+
+.group-profile-join-btn {
+  background-color: var(--color-primary-brand);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.group-profile-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+}
+
+.about-section, .members-section {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.about-section h3, .members-section h3 {
+  margin-top: 0;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 10px;
+}
+
+.members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.member-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}

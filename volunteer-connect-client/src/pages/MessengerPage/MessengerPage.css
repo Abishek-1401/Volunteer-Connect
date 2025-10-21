@@ -1,0 +1,31 @@
+.messenger-page-new {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.messenger-container-new {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 320px 1fr 320px; /* New column sizes */
+  gap: 20px;
+  padding: 0 20px 20px;
+}
+
+@media (max-width: 1200px) {
+  .messenger-container-new {
+    grid-template-columns: 280px 1fr; /* Hide info panel on smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .messenger-container-new {
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: 0;
+    padding: 0;
+  }
+  .messenger-container-new > *:first-child { /* Hide ConversationList on mobile */
+    display: none;
+  }
+}
