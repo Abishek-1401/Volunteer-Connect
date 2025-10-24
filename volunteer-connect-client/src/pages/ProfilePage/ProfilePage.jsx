@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
-import Navbar from '../../components/HomeNavbar'; // Use HomeNavbar
-import Post from '../../components/Post'; // Reuse Post component
-import ProfileCard from '../HomePage/ProfileCard'; // Reuse ProfileCard
-// import './ProfilePage.css'; // Add specific styles if needed
+import { AuthContext } from '../../context/AuthContext';
+import Navbar from '../../components/Navbar/Navbar'; // Use HomeNavbar
+import Post from '../../components/Post/Post'; // Reuse Post component
+import ProfileHeader from '../../components/ProfileHeader/ProfileHeader'; // Use ProfileHeader instead
+import './ProfilePage.css'; // Add specific styles if needed
 
 const ProfilePage = () => {
-  const { user, logout } = useContext(UserContext);
+  const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const [myPosts, setMyPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +25,7 @@ const ProfilePage = () => {
   const fetchMyPosts = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('userToken');
+      const token = localStorage.getItem('token');
       const config = { headers: { Authorization: `Bearer ${token}` } };
       // You might need to create this backend route: GET /api/posts/myposts
       const { data } = await axios.get('/api/posts/myposts', config);
@@ -51,7 +51,7 @@ const ProfilePage = () => {
       <main className="profile-container" style={{ maxWidth: '800px', margin: '100px auto 1rem auto', padding: '1rem' }}>
         
         {/* Display Profile Information (Could use ProfileCard or a dedicated header) */}
-        {/* <ProfileCard user={user} /> */}
+        {<ProfileHeader user={user} />}
         <h2>Your Posts</h2>
 
         {loading && <p>Loading your posts...</p>}

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useToast } from '../../context/ToastContext';
-import { useAuth } from '../../hooks/useAuth';
+import axios from 'axios';
+
 import '../AuthStyles.css';
 
 const SignupPage = () => {
@@ -25,7 +26,6 @@ const SignupPage = () => {
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   
   const { showToast } = useToast();
-  const { register } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -75,7 +75,13 @@ const SignupPage = () => {
           email: formData.email,
           password: formData.password
         };
-        await register(userData);
+        
+        // Direct API call
+        const res = await axios.post('/api/users/register', userData); 
+
+        // Direct token handling
+        localStorage.setItem('token', res.data.token);
+
         showToast('Account created successfully!', 'success');
         navigate('/home');
       } catch (err) {

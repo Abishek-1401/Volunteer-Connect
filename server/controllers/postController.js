@@ -1,10 +1,10 @@
-import Post from '../models/postModel.js';
-import User from '../models/userModel.js';
-
+// server/controllers/postController.js
+import Post from '../models/postModel.js'; // Use require
+import User from '../models/userModel.js'; // Use require
 // @desc    Create a new post
 // @route   POST /api/posts
 // @access  Private
-export const createPost = async (req, res) => {
+const createPost = async (req, res) => {
   const { content, image } = req.body;
 
   if (!content) {
@@ -28,7 +28,7 @@ export const createPost = async (req, res) => {
 // @desc    Get all posts (for a feed)
 // @route   GET /api/posts
 // @access  Private
-export const getPosts = async (req, res) => {
+const getPosts = async (req, res) => {
   try {
     // Find posts, sort by newest, populate user info (excluding password)
     const posts = await Post.find({})
@@ -44,7 +44,7 @@ export const getPosts = async (req, res) => {
 // @desc    Like/Unlike a post
 // @route   PUT /api/posts/:id/like
 // @access  Private
-export const likePost = async (req, res) => {
+const likePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
@@ -76,7 +76,7 @@ export const likePost = async (req, res) => {
 // @desc    Update a post
 // @route   PUT /api/posts/:id
 // @access  Private
-export const updatePost = async (req, res) => {
+const updatePost = async (req, res) => {
   const { content, image } = req.body;
 
   try {
@@ -106,7 +106,7 @@ export const updatePost = async (req, res) => {
 // @desc    Delete a post
 // @route   DELETE /api/posts/:id
 // @access  Private
-export const deletePost = async (req, res) => {
+const deletePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
@@ -127,10 +127,25 @@ export const deletePost = async (req, res) => {
   }
 };
 
+// @desc    Get posts by the current user
+// @route   GET /api/posts/myposts
+// @access  Private
+const getMyPosts = async (req, res) => {
+  try {
+    const posts = await Post.find({ user: req.user.id })
+      .sort({ createdAt: -1 })
+      .populate('user', 'name profileImage');
+
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error: ' + error.message });
+  }
+};
+
 // @desc    Add a comment to a post
 // @route   POST /api/posts/:id/comments
 // @access  Private
-export const addComment = async (req, res) => {
+const addComment = async (req, res) => {
   const { text } = req.body;
 
   if (!text) {
@@ -163,4 +178,15 @@ export const addComment = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Server Error: ' + error.message });
   }
+};
+
+// Use module.exports at the bottom
+export {
+  createPost,
+  getPosts,
+  likePost,
+  updatePost,
+  deletePost,
+  getMyPosts,
+  addComment,
 };

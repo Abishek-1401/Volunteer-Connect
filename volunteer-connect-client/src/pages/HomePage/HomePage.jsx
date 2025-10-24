@@ -1,54 +1,28 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
-import HomeNavbar from '../../components/HomeNavbar'; // Use HomeNavbar
-import ProfileCard from './ProfileCard'; // From HomePage folder
-import CreatePost from '../../components/CreatePost'; // Assuming this is your create post component
-import Post from '../../components/Post'; // Your Post component
-import People from './People'; // From HomePage folder
-import Group from './Group'; // From HomePage folder
-import './HomePage.css'; // Styles for the layout
+import { useAuth } from '../../hooks/useAuth'; // Correct hook for auth
+import Navbar from '../../components/Navbar/Navbar';
+import LeftSidebar from '../../components/LeftSidebar/LeftSidebar';
+import CreatePost from '../../components/CreatePost/CreatePost';
+import Post from '../../components/Post/Post';
+import RightSidebar from '../../components/RightSidebar/RightSidebar';
+import './HomePage.css';
 
 const HomePage = () => {
-  const { user, logout } = useContext(UserContext); // Get user from context
+  const { user, logout, token } = useAuth(); // Get user, logout, and token from AuthContext
   const navigate = useNavigate();
-  const [posts, setPosts] = useState([]); // State to hold fetched posts
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Example user data for ProfileCard (replace with actual context data if needed)
-  const currentUser = {
-    name: user?.name || 'Loading...', // Use name from context or default
-    handle: user?.email || '', // Example handle using email
-    profileImage: user?.profileImage || '/default-avatar.jpg', // Use profile image from context or default
-    stats: {
-      followers: '...', // Fetch or pass these stats
-      following: '...',
-    },
-    skills: user?.skills || [], // Example skills
-    bio: user?.bio || '', // Example bio
-  };
-
-  useEffect(() => {
-    // Redirect to login if user is not available from context
-    if (!user) {
-      navigate('/login');
-    } else {
-      fetchPosts(); // Fetch posts if user is logged in
-    }
-  }, [user, navigate]);
-
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
+    // No need to check token here, AuthProvider does it.
+    // We just need to make sure axios defaults are set OR pass the token manually
+    // AuthProvider already sets axios defaults if token exists.
     try {
       setLoading(true);
-      const token = localStorage.getItem('userToken');
-      if (!token) {
-        navigate('/login'); // Redirect if no token
-        return;
-      }
-      const config = { headers: { Authorization: `Bearer ${token}` } };
-      const { data } = await axios.get('/api/posts', config);
+      const { data } = await axios.get('/api/posts'); // Uses proxy from vite.config.js
       setPosts(data);
       setError('');
     } catch (err) {
@@ -60,42 +34,44 @@ const HomePage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [logout]); // fetchPosts depends on logout
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    } else {
+      fetchPosts(); // Fetch posts if user is logged in
+    }
+  }, [user, navigate, fetchPosts]);
 
   const handlePostCreated = (newPost) => {
-    // Add the new post to the top of the feed
-    setPosts([newPost, ...posts]);
-    // Optionally refetch posts: fetchPosts();
+    // Add the new post to the top of the feed, populated with user info
+    const postWithUser = { ...newPost, user: { _id: user.id, name: user.name, profileImage: user.profileImage } };
+    setPosts(currentPosts => [postWithUser, ...currentPosts]);
   };
 
   const handlePostDeleted = (deletedPostId) => {
     setPosts(currentPosts => currentPosts.filter(p => p._id !== deletedPostId));
   };
 
-  if (loading && !user) return <div>Loading...</div>; // Show loader if still checking auth
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="home-page">
-      <HomeNavbar user={user} logout={logout} />
+      <Navbar />
       <main className="home-container">
-        <aside className="left-column">
-          <ProfileCard user={currentUser} />
-        </aside>
-
-        <section className="middle-column">
-          <CreatePost onPostCreated={handlePostCreated} /> {/* Pass handler to add new post */}
-          {loading && <p>Loading posts...</p>}
+        <LeftSidebar /> {/* Your LeftSidebar component */}
+        
+        <div className="feed"> {/* Center column */}
+          <CreatePost onPostCreated={handlePostCreated} />
           {error && <p style={{ color: 'red' }}>{error}</p>}
           {!loading && posts.length === 0 && <p>No posts yet. Follow users or create one!</p>}
           {!loading && posts.map((post) => (
             <Post key={post._id} post={post} onPostDeleted={handlePostDeleted} />
           ))}
-        </section>
+        </div>
 
-        <aside className="right-column">
-          <People />
-          <Group />
-        </aside>
+        <RightSidebar /> {/* Your RightSidebar component */}
       </main>
     </div>
   );

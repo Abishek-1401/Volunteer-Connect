@@ -1,113 +1,190 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react'; // Added useEffect
 import axios from 'axios';
-import { UserContext } from '../context/UserContext'; // Assuming you have this
-import './Post.css'; // You'll need to create styles for this
+import { AuthContext } from '../../context/AuthContext'; // Use correct context
+import { useToast } from '../../context/ToastContext'; // For feedback
+import ShareModal from '../ShareModal/ShareModal'; // Import ShareModal
+import './Post.css';
 
-// Placeholder components for icons
+// Placeholder Icons
 const LikeIcon = () => <span>❤️</span>;
 const CommentIcon = () => <span>💬</span>;
+const ShareIcon = () => <span>📤</span>;
 const EditIcon = () => <span>✏️</span>;
 const DeleteIcon = () => <span>🗑️</span>;
 
-const Post = ({ post, onPostDeleted, onPostUpdated }) => {
-  const { user } = useContext(UserContext); // Get current user info
-  const [likes, setLikes] = useState(post.likes || []);
-  const [comments, setComments] = useState(post.comments || []);
+const Post = ({ post, onPostDeleted }) => {
+  // Use AuthContext for user info
+  const { user } = useContext(AuthContext);
+  const { showToast } = useToast();
+
+  // Local state for post data to allow editing
+  const [currentPost, setCurrentPost] = useState(post);
+  const [likes, setLikes] = useState(currentPost.likes || []);
+  const [comments, setComments] = useState(currentPost.comments || []);
   const [newComment, setNewComment] = useState('');
-  const [isLiked, setIsLiked] = useState(likes.includes(user?._id)); // Check if current user liked
+  const [isLiked, setIsLiked] = useState(false); // Initialize false, check in useEffect
+
+  // State for editing
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(currentPost.content);
+
+  // State for share modal
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
+  // Update local state when post prop changes
+  useEffect(() => {
+    setCurrentPost(post);
+    setLikes(post.likes || []);
+    setComments(post.comments || []);
+  }, [post]);
+
+  // Check if liked when user or likes change
+  useEffect(() => {
+    setIsLiked(likes.some(like => like === user?._id));
+  }, [likes, user]);
 
   const getTokenConfig = () => {
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem('token'); // Use 'token' from AuthProvider
+    if (!token) {
+      console.error("No token found"); // Or handle logout
+      return null;
+    }
     return { headers: { Authorization: `Bearer ${token}` } };
   };
 
   const handleLike = async () => {
-    if (!user) return; // Prevent liking if not logged in
+    const config = getTokenConfig();
+    if (!user || !config) return;
     try {
-      const config = getTokenConfig();
-      // Assuming your backend returns the updated likes array
-      const { data: updatedLikes } = await axios.put(`/api/posts/${post._id}/like`, {}, config);
+      const { data: updatedLikes } = await axios.put(`/api/posts/${currentPost._id}/like`, {}, config);
       setLikes(updatedLikes);
-      setIsLiked(updatedLikes.includes(user._id));
+      // isLiked state is updated via useEffect
     } catch (error) {
       console.error("Error liking post:", error);
-      // Show error toast/notification
+      showToast('Could not update like.', 'error');
     }
   };
 
   const handleAddComment = async (e) => {
     e.preventDefault();
-    if (!newComment.trim() || !user) return;
+    const config = getTokenConfig();
+    if (!newComment.trim() || !user || !config) return;
     try {
-      const config = getTokenConfig();
-      // Assuming backend returns the full updated comments array
-      const { data: updatedComments } = await axios.post(`/api/posts/${post._id}/comments`, { text: newComment }, config);
-      setComments(updatedComments); // Update comments in state
-      setNewComment(''); // Clear input
+      const { data: updatedComments } = await axios.post(`/api/posts/${currentPost._id}/comments`, { text: newComment }, config);
+      setComments(updatedComments);
+      setNewComment('');
     } catch (error) {
       console.error("Error adding comment:", error);
-      // Show error toast/notification
+      showToast('Could not add comment.', 'error');
     }
   };
 
   const handleDelete = async () => {
-    if (!user || user._id !== post.user._id) return; // Only allow author to delete
+    const config = getTokenConfig();
+    if (!user || user._id !== currentPost.user?._id || !config) return;
 
     if (window.confirm("Are you sure you want to delete this post?")) {
       try {
-        const config = getTokenConfig();
-        await axios.delete(`/api/posts/${post._id}`, config);
+        await axios.delete(`/api/posts/${currentPost._id}`, config);
         if (onPostDeleted) {
-          onPostDeleted(post._id); // Notify parent component to remove post from state
+          onPostDeleted(currentPost._id);
         }
-        // Show success toast/notification
+        showToast('Post deleted.', 'success');
       } catch (error) {
         console.error("Error deleting post:", error);
-        // Show error toast/notification
+        showToast('Could not delete post.', 'error');
       }
     }
   };
 
-  // Basic check to see if the current user is the author
-  const isAuthor = user && post.user && user._id === post.user._id;
+  // --- Edit Functionality ---
+  const handleEditToggle = () => {
+    if (!isEditing) {
+      setEditedContent(currentPost.content); // Reset edit field on opening
+    }
+    setIsEditing(!isEditing);
+  };
+
+  const handleUpdate = async () => {
+    const config = getTokenConfig();
+    if (!editedContent.trim() || !user || !config) return;
+
+    try {
+      const { data: updatedPostData } = await axios.put(`/api/posts/${currentPost._id}`, { content: editedContent }, config);
+      setCurrentPost(updatedPostData); // Update local post state
+      setIsEditing(false); // Exit edit mode
+      showToast('Post updated!', 'success');
+      // No need for onPostUpdated prop if managing state locally
+    } catch (error) {
+      console.error("Error updating post:", error);
+      showToast('Could not update post.', 'error');
+    }
+  };
+
+  const isAuthor = user && currentPost.user && user._id === currentPost.user._id;
 
   return (
-    <div className="post-card card"> {/* Use card style */}
+    <div className="post-card">
       <div className="post-header">
-        <img src={post.user?.profileImage || '/default-avatar.jpg'} alt={post.user?.name} className="user-avatar" />
-        <div>
-          <strong>{post.user?.name || 'User'}</strong>
-          <p>{new Date(post.createdAt).toLocaleString()}</p>
+        <div className="post-header-left">
+          <img src={currentPost.user?.profileImage || '/default-avatar.jpg'} alt={currentPost.user?.name} className="user-avatar" />
+          <div className="post-author-info">
+            <div className="post-author-name">{currentPost.user?.name || 'User'}</div>
+            <div className="post-timestamp">{new Date(currentPost.createdAt).toLocaleString()}</div>
+          </div>
         </div>
-        {/* Basic options menu - could be a dropdown */}
         {isAuthor && (
           <div className="post-options">
-            <button onClick={() => {/* Implement edit logic, maybe open modal */}}> <EditIcon /> </button>
+            <button onClick={handleEditToggle}> <EditIcon /> </button>
             <button onClick={handleDelete}> <DeleteIcon /> </button>
           </div>
         )}
       </div>
 
-      <p className="post-content">{post.content}</p>
-      {post.image && <img src={post.image} alt="Post content" className="post-image" />}
+      {isEditing ? (
+        <div className="edit-post-section">
+          <textarea
+            value={editedContent}
+            onChange={(e) => setEditedContent(e.target.value)}
+          />
+          <div className="edit-actions">
+            <button onClick={handleUpdate}>Save</button>
+            <button onClick={handleEditToggle}>Cancel</button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="post-content">{currentPost.content}</div>
+          {currentPost.image && <img src={currentPost.image} alt="Post content" className="post-image" />}
+        </>
+      )}
 
       <div className="post-actions">
-        <button onClick={handleLike} className={`like-button ${isLiked ? 'liked' : ''}`}>
-          <LikeIcon /> {likes.length} Likes
-        </button>
-        <span><CommentIcon /> {comments.length} Comments</span>
+        <div className="post-actions-left">
+          <button onClick={handleLike} className={`like-button ${isLiked ? 'liked' : ''}`}>
+            <LikeIcon />
+          </button>
+          <button className="comment-button">
+            <CommentIcon />
+          </button>
+          <button onClick={() => setIsShareModalOpen(true)} className="share-button">
+            <ShareIcon />
+          </button>
+        </div>
+      </div>
+
+      <div className="post-stats">
+        {likes.length} {likes.length === 1 ? 'like' : 'likes'}
       </div>
 
       <div className="comment-section">
-        {/* Display existing comments */}
-        {comments.slice(0, 2).map((comment) => ( // Show first 2 comments
-          <div key={comment._id} className="comment">
-            <strong>{comment.user?.name || 'User'}:</strong> {comment.text}
+        {comments.slice(0, 2).map((comment) => (
+          <div key={comment._id || comment.createdAt} className="comment">
+            <strong>{comment.user?.name || 'User'}</strong> {comment.text}
           </div>
         ))}
         {comments.length > 2 && <p>View all {comments.length} comments...</p>}
 
-        {/* Add comment form */}
         {user && (
           <form onSubmit={handleAddComment} className="comment-form">
             <input
@@ -120,6 +197,13 @@ const Post = ({ post, onPostDeleted, onPostUpdated }) => {
           </form>
         )}
       </div>
+
+      {isShareModalOpen && (
+        <ShareModal
+          post={currentPost}
+          onClose={() => setIsShareModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

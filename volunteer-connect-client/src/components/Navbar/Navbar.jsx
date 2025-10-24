@@ -5,12 +5,12 @@ import { useAuth } from '../../hooks/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
 import useClickOutside from '../../hooks/useClickOutside';
 import NotificationPopup from '../NotificationPopup/NotificationPopup';
-import { 
-  FaSearch, 
-  FaBell, 
-  FaUserCircle, 
-  FaSun, 
-  FaMoon, 
+import {
+  FaSearch,
+  FaBell,
+  FaUserCircle,
+  FaSun,
+  FaMoon,
   FaSignOutAlt,
   FaBars,
   FaTimes,
@@ -25,7 +25,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   const { theme, toggleTheme } = useTheme();
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
     setIsNotificationsOpen(false);
@@ -89,14 +89,14 @@ const Navbar = () => {
         <div className="navbar-desktop-items">
           <form className="search-bar" onSubmit={handleSearchSubmit}>
             <FaSearch className="search-icon" />
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </form>
-          
+
           <div className="navbar-icon-wrapper" ref={notificationsRef}>
             <div className="navbar-icon" onClick={toggleNotifications}>
               <FaBell />
@@ -117,7 +117,7 @@ const Navbar = () => {
           <button onClick={toggleTheme} className="theme-toggle-button" aria-label="Toggle theme">
             {theme === 'light' ? <FaMoon /> : <FaSun />}
           </button>
-          
+
           <div className="profile-section" ref={dropdownRef}>
             <FaUserCircle className="profile-icon" onClick={toggleDropdown} />
             {isDropdownOpen && (
@@ -143,8 +143,8 @@ const Navbar = () => {
         <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
             <form className="mobile-search-bar" onSubmit={handleSearchSubmit}>
                 <FaSearch className="search-icon" />
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   placeholder="Search..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}

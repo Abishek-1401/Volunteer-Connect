@@ -1,8 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --color-dark-shade: #3b0270;
   --color-primary-brand: #6f00ff;
   --color-light-accent: #e9b3fb;
-  
+
   /* Light Theme Colors */
   --color-background: #fff1f1;
   --color-surface: #ffffff;

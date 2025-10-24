@@ -1,9 +1,41 @@
-.project-files-container { padding: 20px; display: flex; flex-direction: column; gap: 15px; }
-.file-item { display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(128,128,128,0.1); border-radius: 8px; }
-.file-icon { font-size: 2.5rem; }
-.file-icon.pdf { color: #e53935; }
-.file-icon.image { color: #8a3ffc; }
-.file-info { flex-grow: 1; }
-.file-name { display: block; font-weight: 600; }
-.file-meta { font-size: 0.8rem; color: var(--color-text-secondary); }
-.download-btn { background: none; border: none; font-size: 1.2rem; color: var(--color-text-secondary); cursor: pointer; }
+.project-files-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: rgba(128, 128, 128, 0.1);
+  border-radius: 8px;
+}
+.file-icon {
+  font-size: 2.5rem;
+}
+.file-icon.pdf {
+  color: #e53935;
+}
+.file-icon.image {
+  color: #8a3ffc;
+}
+.file-info {
+  flex-grow: 1;
+}
+.file-name {
+  display: block;
+  font-weight: 600;
+}
+.file-meta {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+.download-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}

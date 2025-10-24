@@ -1,33 +1,33 @@
 import React, { useState } from 'react';
 import './CreatePost.css';
 import axios from 'axios';
-import { useToast } from '../../context/ToastContext';
+// import { useToast } from '../../context/ToastContext'; // Temporarily disabled
 import { FaUserCircle, FaImage } from 'react-icons/fa';
 
-// It now needs to receive a prop to tell the feed to refresh
 const CreatePost = ({ onPostCreated }) => {
   const [content, setContent] = useState('');
-  const { showToast } = useToast();
+  // const { showToast } = useToast(); // Temporarily disabled
+  // Auth token is already set on axios defaults by AuthProvider
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!content.trim()) {
-      showToast('Post content cannot be empty.', 'error');
+      alert('Post content cannot be empty.');
       return;
     }
     try {
+      // AuthProvider already set the token header
       await axios.post('/api/posts', { content });
-      showToast('Post created successfully!', 'success');
+      alert('Post created successfully!');
       setContent(''); // Clear the text area
-      onPostCreated(); // Tell the feed to refetch posts
+      onPostCreated(); // Refresh posts
     } catch (err) {
       console.error("Failed to create post:", err);
-      showToast('Failed to create post.', 'error');
+      alert(err.response?.data?.message || 'Failed to create post.');
     }
   };
 
   return (
-    // Wrap the component in a form
     <form className="create-post-container" onSubmit={handleSubmit}>
       <div className="create-post-header">
         <FaUserCircle className="create-post-avatar" />

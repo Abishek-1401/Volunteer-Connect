@@ -15,11 +15,8 @@ const Feed = () => {
     try {
       const res = await axios.get('/api/posts');
       const formattedPosts = res.data.map(p => ({
-          id: p._id,
-          author: p.author ? p.author.name : 'Unknown User',
-          content: p.content,
-          likes: p.likes.length,
-          comments: p.comments.length,
+        ...p,
+        id: p._id,
       }));
       setPosts(formattedPosts);
     } catch (err) {

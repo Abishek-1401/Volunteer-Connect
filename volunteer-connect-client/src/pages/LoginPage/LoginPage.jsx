@@ -1,15 +1,14 @@
+// src/pages/LoginPage/LoginPage.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useToast } from '../../context/ToastContext';
 import { useAuth } from '../../hooks/useAuth';
 import '../AuthStyles.css';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
-  
-  const { showToast } = useToast();
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -20,15 +19,15 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.email.trim() === '' || formData.password.trim() === '') {
-        showToast('Please enter both email and password.', 'error');
+        alert('Please enter both email and password.');
         return;
     }
     try {
       await login(formData);
-      showToast('Login successful!', 'success');
+      alert('Login successful!');
       navigate('/home');
     } catch (err) {
-      showToast(err.response?.data?.msg || 'An error occurred during login.', 'error');
+      alert(err.response?.data?.msg || 'An error occurred during login.');
     }
   };
 

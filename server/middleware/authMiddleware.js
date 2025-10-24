@@ -1,7 +1,8 @@
-import jwt from 'jsonwebtoken';
-import User from '../models/userModel.js';
+// server/middleware/authMiddleware.js
+import jwt from 'jsonwebtoken'; // Use require
+import User from '../models/userModel.js'; // Use require
 
-export const protect = async (req, res, next) => {
+const protect = async (req, res, next) => {
   let token;
 
   if (
@@ -33,3 +34,5 @@ export const protect = async (req, res, next) => {
     res.status(401).json({ message: 'Not authorized, no token' });
   }
 };
+
+export { protect }; // Use module.exports

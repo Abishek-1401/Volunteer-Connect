@@ -1,13 +1,15 @@
+// server/routes/postRoutes.js
 import express from 'express';
 import {
   createPost,
   getPosts,
   likePost,
-  updatePost, // Import new functions
-  deletePost, // Import new functions
-  addComment  // Import new functions
-} from '../controllers/postController.js';
-import { protect } from '../middleware/authMiddleware.js';
+  updatePost,
+  deletePost,
+  getMyPosts,
+  addComment
+} from '../controllers/postController.js'; // Use require
+import { protect } from '../middleware/authMiddleware.js'; // Use require
 
 const router = express.Router();
 
@@ -29,4 +31,8 @@ router.route('/:id/like')
 router.route('/:id/comments')
   .post(protect, addComment);   // POST /api/posts/:id/comments
 
-export default router;
+// Route for getting user's own posts
+router.route('/myposts')
+  .get(protect, getMyPosts);   // GET /api/posts/myposts
+
+export default router; // Use module.exports

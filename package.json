@@ -1,0 +1,6 @@
+{
+  "workspaces": [
+    "volunteer-connect-client",
+    "server"
+  ]
+}
