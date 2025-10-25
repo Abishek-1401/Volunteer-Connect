@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 import { useToast } from '../../context/ToastContext';
+import { useAuth } from '../../hooks/useAuth';
 import './CreateProjectPage.css';
 
 const CreateProjectPage = () => {
@@ -12,21 +13,105 @@ const CreateProjectPage = () => {
     location: '',
     eventDate: '',
   });
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { showToast } = useToast();
+  const { user, token } = useAuth();
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setProjectData({ ...projectData, [e.target.name]: e.target.value });
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!projectData.title.trim()) {
+      newErrors.title = 'Project title is required';
+    } else if (projectData.title.length < 3) {
+      newErrors.title = 'Title must be at least 3 characters long';
+    } else if (projectData.title.length > 100) {
+      newErrors.title = 'Title cannot exceed 100 characters';
+    }
+
+    if (!projectData.description.trim()) {
+      newErrors.description = 'Description is required';
+    } else if (projectData.description.length < 10) {
+      newErrors.description = 'Description must be at least 10 characters long';
+    } else if (projectData.description.length > 1000) {
+      newErrors.description = 'Description cannot exceed 1000 characters';
+    }
+
+    if (!projectData.location.trim()) {
+      newErrors.location = 'Location is required';
+    }
+
+    if (!projectData.eventDate) {
+      newErrors.eventDate = 'Event date is required';
+    } else {
+      const selectedDate = new Date(projectData.eventDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate < today) {
+        newErrors.eventDate = 'Event date cannot be in the past';
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProjectData({ ...projectData, [name]: value });
+
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: '' });
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('New Project Data:', {
-        ...projectData,
-        tags: projectData.tags.split(',').map(tag => tag.trim()) // Convert string to array
-    });
-    showToast('Project created successfully!', 'success');
-    navigate('/projects'); // Redirect back to the project hub
+
+    if (!validateForm()) {
+      return;
+    }
+
+    if (!user) {
+      showToast('Please log in to create a project', 'error');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('http://localhost:5001/api/projects', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          ...projectData,
+          tags: projectData.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        showToast('Project created successfully!', 'success');
+        navigate('/projects');
+      } else {
+        if (data.msg) {
+          showToast(data.msg, 'error');
+        } else {
+          showToast('Failed to create project', 'error');
+        }
+      }
+    } catch (error) {
+      console.error('Error creating project:', error);
+      showToast('Network error. Please try again.', 'error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -64,7 +149,9 @@ const CreateProjectPage = () => {
             </div>
             <div className="form-actions">
               <Link to="/projects" className="cancel-btn">Cancel</Link>
-              <button type="submit" className="save-btn">Publish Project</button>
+              <button type="submit" className="save-btn" disabled={isSubmitting}>
+                {isSubmitting ? 'Publishing...' : 'Publish Project'}
+              </button>
             </div>
           </form>
         </div>

@@ -22,6 +22,21 @@ const userSchema = new mongoose.Schema({
     required: true,
     select: false, // Don't send password back in queries by default
   },
+  following: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+  profileImage: {
+    type: String,
+    default: '/assets/default-avatar.png',
+  },
+  bio: {
+    type: String,
+    default: '',
+  },
+  skills: [{
+    type: String,
+  }],
 }, {
   // This automatically adds `createdAt` and `updatedAt` fields
   timestamps: true, 

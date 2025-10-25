@@ -3,25 +3,38 @@ import { Link } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 import ProjectCard from '../../components/ProjectCard/ProjectCard';
 import ProjectFilter from '../../components/ProjectFilter/ProjectFilter';
+import { useToast } from '../../context/ToastContext';
 import './ProjectHubPage.css';
-
-// --- Mock Data ---
-const mockProjects = [
-  { id: '1', title: 'Community Garden Initiative', description: 'We are starting a new community garden to grow fresh produce for local shelters. We need help with planting, watering, and general setup. No experience necessary!', tags: ['environment', 'gardening', 'community'], location: { address: 'Coimbatore, TN' }, organizer: { name: 'Eleanor Pena' } },
-  { id: '2', title: 'Tech Skills Workshop for Kids', description: 'Host a fun workshop to teach basic coding skills to underprivileged children. We need mentors who are familiar with Scratch or basic Python.', tags: ['education', 'tech', 'children'], location: { address: 'Chennai, TN' }, organizer: { name: 'Cody Fisher' } },
-  { id: '3', title: 'Beach Cleanup Drive', description: 'Join us this Saturday to clean up Marina Beach. Let\'s work together to protect our marine ecosystem. Gloves and bags will be provided.', tags: ['environment', 'ocean', 'community'], location: { address: 'Chennai, TN' }, organizer: { name: 'Jane Doe' } },
-];
 
 const ProjectHubPage = () => {
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [filters, setFilters] = useState({ keyword: '', location: '' });
+  const [loading, setLoading] = useState(true);
+  const { showToast } = useToast();
 
-  // Initial data load
+  // Fetch projects from API
   useEffect(() => {
-    setProjects(mockProjects);
-setFilteredProjects(mockProjects);
-  }, []);
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/api/projects');
+        if (response.ok) {
+          const data = await response.json();
+          setProjects(data);
+          setFilteredProjects(data);
+        } else {
+          showToast('Failed to load projects', 'error');
+        }
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+        showToast('Network error. Please try again.', 'error');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, [showToast]);
 
   // Effect to apply filters
   useEffect(() => {
@@ -40,7 +53,7 @@ setFilteredProjects(mockProjects);
     // Filter by location
     if (filters.location) {
       const location = filters.location.toLowerCase();
-      result = result.filter(p => p.location.address.toLowerCase().includes(location));
+      result = result.filter(p => p.location.toLowerCase().includes(location));
     }
 
     setFilteredProjects(result);
@@ -64,8 +77,10 @@ setFilteredProjects(mockProjects);
         </div>
         <div className="hub-layout">
           <div className="project-feed">
-            {filteredProjects.length > 0 ? (
-              filteredProjects.map(project => <ProjectCard key={project.id} project={project} />)
+            {loading ? (
+              <p>Loading projects...</p>
+            ) : filteredProjects.length > 0 ? (
+              filteredProjects.map(project => <ProjectCard key={project._id} project={project} />)
             ) : (
               <p>No projects found matching your criteria.</p>
             )}

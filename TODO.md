@@ -1,11 +1,14 @@
-# Monorepo Reorganization Tasks
+# TODO: Add Follow Option for People, Enhance Post Search by Keywords
 
-## Pending Tasks
-- [x] Move devDependencies (autoprefixer, postcss, tailwindcss) from root package.json to volunteer-connect-client/package.json
-- [x] Move tailwind.config.js from root to volunteer-connect-client/ and update content paths
-- [x] Move postcss.config.js from root to volunteer-connect-client/
-- [x] Update root package.json to include workspaces configuration
+## Backend Changes
+- [x] Add unfollowUser to userController.js
+- [x] Update userRoutes.js to add unfollow route
+- [x] Enhance searchPosts in postController.js to be keyword-based
 
-## Followup Steps
-- [x] Test that the client builds and runs correctly
-- [x] Verify Tailwind CSS styling works as expected
+## Frontend Changes
+- [x] Update UserCard.jsx to handle follow/unfollow functionality and show current state
+
+## Testing
+- [x] Test backend endpoints
+- [x] Test frontend functionality
+- [x] Ensure authentication and authorization work correctly

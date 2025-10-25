@@ -42,6 +42,19 @@
   transition: opacity 0.2s ease;
 }
 
-.user-card-button:hover {
+.user-card-button:hover:not(:disabled) {
   opacity: 0.9;
+}
+
+.user-card-button.following {
+  background-color: #28a745;
+}
+
+.user-card-button.following:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.user-card-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

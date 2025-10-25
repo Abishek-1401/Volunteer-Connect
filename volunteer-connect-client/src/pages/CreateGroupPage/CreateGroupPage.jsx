@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Navbar from '../../components/Navbar/Navbar';
 import { useToast } from '../../context/ToastContext';
 import './CreateGroupPage.css';
@@ -11,6 +12,7 @@ const CreateGroupPage = () => {
     description: '',
     privacy: 'public',
   });
+  const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -18,11 +20,21 @@ const CreateGroupPage = () => {
     setGroupData({ ...groupData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('New Group Data:', groupData);
-    showToast('Group created successfully!', 'success');
-    navigate('/groups'); // Redirect back to the groups page
+    setLoading(true);
+
+    try {
+      await axios.post('/api/groups', groupData);
+      showToast('Group created successfully!', 'success');
+      navigate('/groups'); // Redirect back to the groups page
+    } catch (error) {
+      console.error('Error creating group:', error);
+      const message = error.response?.data?.msg || 'Failed to create group';
+      showToast(message, 'error');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -65,7 +77,9 @@ const CreateGroupPage = () => {
             </div>
             <div className="form-actions">
               <Link to="/groups" className="cancel-btn">Cancel</Link>
-              <button type="submit" className="save-btn">Create Group</button>
+              <button type="submit" className="save-btn" disabled={loading}>
+                {loading ? 'Creating...' : 'Create Group'}
+              </button>
             </div>
           </form>
         </div>

@@ -92,8 +92,108 @@ const getMe = async (req, res) => {
   res.json(req.user);
 };
 
+// @desc    Get user suggestions
+// @route   GET /api/users/suggestions
+// @access  Private
+const getUserSuggestions = async (req, res) => {
+  try {
+    const currentUser = req.user;
+    // Get users not followed by current user and not the current user
+    const suggestions = await User.find({
+      _id: { $ne: currentUser._id, $nin: currentUser.following }
+    }).select('name username profileImage').limit(5);
+
+    res.json(suggestions);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+};
+
+// @desc    Follow a user
+// @route   PUT /api/users/:id/follow
+// @access  Private
+const followUser = async (req, res) => {
+  try {
+    const userToFollow = await User.findById(req.params.id);
+    const currentUser = req.user;
+
+    if (!userToFollow) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    if (currentUser.following.includes(req.params.id)) {
+      return res.status(400).json({ msg: 'Already following this user' });
+    }
+
+    currentUser.following.push(req.params.id);
+    await currentUser.save();
+
+    res.json({ msg: 'User followed successfully' });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+};
+
+// @desc    Unfollow a user
+// @route   PUT /api/users/:id/unfollow
+// @access  Private
+const unfollowUser = async (req, res) => {
+  try {
+    const userToUnfollow = await User.findById(req.params.id);
+    const currentUser = req.user;
+
+    if (!userToUnfollow) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    if (!currentUser.following.includes(req.params.id)) {
+      return res.status(400).json({ msg: 'Not following this user' });
+    }
+
+    currentUser.following = currentUser.following.filter(id => id.toString() !== req.params.id);
+    await currentUser.save();
+
+    res.json({ msg: 'User unfollowed successfully' });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+};
+
+// @desc    Search users
+// @route   GET /api/users/search
+// @access  Private
+const searchUsers = async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ message: 'Search query is required' });
+  }
+
+  try {
+    const users = await User.find({
+      $or: [
+        { name: { $regex: q, $options: 'i' } },
+        { username: { $regex: q, $options: 'i' } }
+      ]
+    })
+      .select('name username profileImage')
+      .limit(20);
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error: ' + error.message });
+  }
+};
+
 export {
   registerUser,
   loginUser,
   getMe,
+  getUserSuggestions,
+  followUser,
+  unfollowUser,
+  searchUsers,
 };

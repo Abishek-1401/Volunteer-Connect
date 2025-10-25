@@ -28,12 +28,14 @@ export const getMessages = async (req, res) => {
     const formattedMessages = messages.reverse().map(msg => ({
       id: msg._id,
       sender: {
+        id: msg.sender._id,
         name: msg.sender.name,
-        avatar: `https://randomuser.me/api/portraits/${msg.sender.name.includes(' ') ? 'women' : 'men'}/1.jpg`,
+        avatar: msg.sender.profileImage || '/assets/default-avatar.png',
       },
       text: msg.content,
       timestamp: msg.createdAt,
       messageType: msg.messageType,
+      isFromCurrentUser: msg.sender._id.toString() === userId.toString(),
     }));
 
     res.json(formattedMessages);
@@ -76,18 +78,20 @@ export const sendMessage = async (req, res) => {
     });
 
     // Populate sender info
-    await message.populate('sender', 'name username');
+    await message.populate('sender', 'name username profileImage');
 
     // Format for frontend
     const formattedMessage = {
       id: message._id,
       sender: {
+        id: message.sender._id,
         name: message.sender.name,
-        avatar: `https://randomuser.me/api/portraits/${message.sender.name.includes(' ') ? 'women' : 'men'}/1.jpg`,
+        avatar: message.sender.profileImage || '/assets/default-avatar.png',
       },
       text: message.content,
       timestamp: message.createdAt,
       messageType: message.messageType,
+      isFromCurrentUser: message.sender._id.toString() === userId.toString(),
     };
 
     res.status(201).json(formattedMessage);

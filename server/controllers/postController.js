@@ -180,6 +180,36 @@ const addComment = async (req, res) => {
   }
 };
 
+// @desc    Search posts
+// @route   GET /api/posts/search
+// @access  Private
+const searchPosts = async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ message: 'Search query is required' });
+  }
+
+  try {
+    // Split query into keywords
+    const keywords = q.split(/\s+/).filter(word => word.length > 0);
+
+    // Create regex for each keyword
+    const keywordRegexes = keywords.map(keyword => new RegExp(keyword, 'i'));
+
+    const posts = await Post.find({
+      $or: keywordRegexes.map(regex => ({ content: { $regex: regex } }))
+    })
+      .sort({ createdAt: -1 })
+      .populate('user', 'name profileImage')
+      .limit(20);
+
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error: ' + error.message });
+  }
+};
+
 // Use module.exports at the bottom
 export {
   createPost,
@@ -189,4 +219,5 @@ export {
   deletePost,
   getMyPosts,
   addComment,
+  searchPosts,
 };

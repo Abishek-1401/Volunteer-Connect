@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth'; // Correct hook for auth
@@ -10,7 +10,7 @@ import RightSidebar from '../../components/RightSidebar/RightSidebar';
 import './HomePage.css';
 
 const HomePage = () => {
-  const { user, logout, token } = useAuth(); // Get user, logout, and token from AuthContext
+  const { user, logout } = useAuth(); // Get user, logout, and token from AuthContext
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);

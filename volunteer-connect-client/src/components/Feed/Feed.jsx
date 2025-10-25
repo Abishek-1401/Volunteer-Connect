@@ -35,7 +35,9 @@ const Feed = () => {
       {/* We now pass the onPostCreated prop to the inline CreatePost component.
         All the modal logic has been removed.
       */}
-      <CreatePost onPostCreated={fetchPosts} />
+      <CreatePost onPostCreated={(newPost) => {
+        setPosts(prevPosts => [newPost, ...prevPosts]);
+      }} />
 
       {loading ? (
         <div className="loading-container">

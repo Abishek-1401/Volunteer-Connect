@@ -1,14 +1,18 @@
 import React, { useState, useRef } from 'react';
+import axios from 'axios';
 import './MessageInputForm.css';
 import { FaPaperclip, FaSmile, FaPaperPlane } from 'react-icons/fa';
 import useClickOutside from '../../hooks/useClickOutside';
+import { useToast } from '../../context/ToastContext';
 
 const frequentEmojis = ['😀', '😂', '❤️', '👍', '🙏', '🔥', '😊', '🎉'];
 
-const MessageInputForm = ({ placeholder }) => {
+const MessageInputForm = ({ placeholder, conversationId, onMessageSent }) => {
   const [inputText, setInputText] = useState('');
   const [showPicker, setShowPicker] = useState(false);
+  const [sending, setSending] = useState(false);
   const pickerRef = useRef(null);
+  const { showToast } = useToast();
 
   useClickOutside(pickerRef, () => setShowPicker(false));
 
@@ -19,14 +23,28 @@ const MessageInputForm = ({ placeholder }) => {
   const handleFileChange = (e) => {
     if (e.target.files.length > 0) {
       console.log('Selected file:', e.target.files[0].name);
+      // TODO: Implement file upload functionality
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (inputText.trim()) {
-      console.log("New message:", inputText);
-      setInputText('');
+    if (inputText.trim() && !sending && conversationId) {
+      setSending(true);
+      try {
+        const { data } = await axios.post(`/api/messages/${conversationId}`, {
+          content: inputText.trim()
+        });
+        setInputText('');
+        if (onMessageSent) {
+          onMessageSent(data);
+        }
+      } catch (error) {
+        console.error('Error sending message:', error);
+        showToast('Failed to send message', 'error');
+      } finally {
+        setSending(false);
+      }
     }
   };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FaUsers } from 'react-icons/fa';
 import './GroupCard.css';
 
@@ -10,7 +11,7 @@ const GroupCard = ({ group }) => {
         <span className="group-card-name">{group.name}</span>
         <span className="group-card-desc">{group.description}</span>
       </div>
-      <button className="group-card-button">Join</button>
+      <Link to={`/groups/${group._id}`} className="group-card-button">View Details</Link>
     </div>
   );
 };

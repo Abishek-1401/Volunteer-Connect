@@ -48,6 +48,22 @@
   font-weight: 600;
   font-size: 1.1rem;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.group-profile-join-btn:hover:not(:disabled) {
+  background-color: var(--color-primary-brand-hover);
+  transform: translateY(-1px);
+}
+
+.group-profile-join-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.group-profile-join-btn.joined {
+  background-color: var(--color-success);
+  cursor: default;
 }
 
 .group-profile-content {

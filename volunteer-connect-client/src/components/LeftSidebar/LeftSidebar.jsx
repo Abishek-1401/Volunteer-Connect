@@ -25,25 +25,33 @@ const LeftSidebar = () => {
 
           <div className="profile-stats-new">
             <div className="stat">
-              <span className="stat-number">1.2K</span>
+              <span className="stat-number">{user.followers ? user.followers.length : 0}</span>
               <span className="stat-label">Followers</span>
             </div>
             <span className="stat-divider">|</span>
             <div className="stat">
-              <span className="stat-number">340</span>
+              <span className="stat-number">{user.following ? user.following.length : 0}</span>
               <span className="stat-label">Following</span>
             </div>
           </div>
 
           <div className="profile-tags-new">
-            <span className="tag">React</span>
-            <span className="tag">Node.js</span>
-            <span className="tag">MongoDB</span>
-            <span className="tag">Express</span>
+            {user.skills && user.skills.length > 0 ? (
+              user.skills.map((skill, index) => (
+                <span key={index} className="tag">{skill}</span>
+              ))
+            ) : (
+              <>
+                <span className="tag">React</span>
+                <span className="tag">Node.js</span>
+                <span className="tag">MongoDB</span>
+                <span className="tag">Express</span>
+              </>
+            )}
           </div>
 
           <div className="profile-bio-new">
-            <p>Passionate MERN stack developer creating impactful web applications.</p>
+            <p>{user.bio || 'Passionate MERN stack developer creating impactful web applications.'}</p>
           </div>
         </div>
       </div>

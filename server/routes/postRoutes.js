@@ -7,7 +7,8 @@ import {
   updatePost,
   deletePost,
   getMyPosts,
-  addComment
+  addComment,
+  searchPosts
 } from '../controllers/postController.js'; // Use require
 import { protect } from '../middleware/authMiddleware.js'; // Use require
 
@@ -34,5 +35,9 @@ router.route('/:id/comments')
 // Route for getting user's own posts
 router.route('/myposts')
   .get(protect, getMyPosts);   // GET /api/posts/myposts
+
+// Route for searching posts
+router.route('/search')
+  .get(protect, searchPosts);   // GET /api/posts/search
 
 export default router; // Use module.exports

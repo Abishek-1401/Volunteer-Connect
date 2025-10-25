@@ -17,10 +17,10 @@ const CreatePost = ({ onPostCreated }) => {
     }
     try {
       // AuthProvider already set the token header
-      await axios.post('/api/posts', { content });
+      const response = await axios.post('/api/posts', { content });
       alert('Post created successfully!');
       setContent(''); // Clear the text area
-      onPostCreated(); // Refresh posts
+      onPostCreated(response.data); // Pass the new post for optimistic update
     } catch (err) {
       console.error("Failed to create post:", err);
       alert(err.response?.data?.message || 'Failed to create post.');

@@ -1,42 +1,23 @@
+/* src/components/Post/Post.css */
+
 .post-card {
-  /* --- Glassmorphism Style --- */
-  background-color: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-  transition: all 0.3s ease-in-out;
-
-  /* Dark mode adjustments */
-  background-color: rgba(31, 41, 55, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-.post-card:hover {
-  transform: translateY(-0.125rem);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
 .post-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 10px;
+  padding: 15px; /* Add padding to header */
 }
 
-.post-header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.user-avatar {
-  width: 32px;
-  height: 32px;
+.post-avatar {
+  width: 40px; /* From Post.css */
+  height: 40px; /* From Post.css */
   border-radius: 50%;
   object-fit: cover;
 }
@@ -49,22 +30,60 @@
 .post-author-name {
   font-weight: 600;
   color: var(--color-text-primary);
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .post-timestamp {
-  font-size: 12px;
+  font-size: 0.8rem;
   color: var(--color-text-secondary);
 }
 
 .post-options {
+  margin-left: auto; /* Pushes options to the right */
+  position: relative;
+}
+
+.options-toggle-btn {
+  background: none;
+  border: none;
   cursor: pointer;
   color: var(--color-text-primary);
+  font-size: 1rem;
+}
+
+.options-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--glass-bg-popup);
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100px;
+}
+.options-dropdown button {
+  background: none;
+  border: none;
+  padding: 10px 12px;
+  text-align: left;
+  cursor: pointer;
+  color: var(--color-text-primary);
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+.options-dropdown button:hover {
+  background-color: var(--glass-border);
+}
+.options-dropdown button.delete {
+  color: #e53935;
 }
 
 .post-content {
-  padding: 16px 20px;
-  font-size: 14px;
+  margin: 0 15px 15px 15px; /* Add padding to content */
   line-height: 1.5;
   color: var(--color-text-primary);
   word-wrap: break-word;
@@ -75,147 +94,129 @@
   max-height: 600px;
   object-fit: cover;
   display: block;
+  /* Image has no margin-top or border-radius */
 }
 
+/* --- NEW ACTION BUTTONS & STATS --- */
 .post-actions {
   display: flex;
-  justify-content: space-between;
-  padding: 16px 20px;
+  justify-content: space-between; /* Pushes Share button to the right */
+  align-items: center;
+  padding: 8px 15px; /* Padding for the action bar */
+}
+
+.post-actions-right {
+  display: flex;
+  gap: 12px;
 }
 
 .post-actions-left {
   display: flex;
-  gap: 16px;
+  gap: 12px; /* Space between like and comment icons */
 }
 
-.like-button, .comment-button, .share-button {
+.post-action-button {
   background: none;
   border: none;
   cursor: pointer;
   color: var(--color-text-primary);
-  font-size: 24px;
   padding: 0;
-  transition: color 0.2s ease;
+  font-size: 1.5rem; /* Makes icons bigger */
+  transition: color 0.2s ease, transform 0.1s ease;
 }
 
-.like-button:hover, .comment-button:hover, .share-button:hover {
-  color: var(--color-primary-brand);
+.post-action-button:hover {
+  color: var(--color-text-secondary);
+}
+.post-action-button:active {
+  transform: scale(0.9);
 }
 
-.like-button.liked {
-  color: #ed4956;
+.post-action-button.liked {
+  color: #ed4956; /* Instagram Red */
+}
+.post-action-button.liked:hover {
+  color: #c13584; /* Darker red on hover */
 }
 
 .post-stats {
-  font-size: 14px;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--color-text-primary);
-  padding: 0 20px;
-  margin-bottom: 8px;
+  padding: 0 15px 15px 15px; /* Bottom padding for the post */
 }
 
+/* --- HIDE THE OLD COMMENT SECTION --- */
 .comment-section {
-  padding: 0 20px 16px;
+  display: none;
 }
 
-.comment {
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: var(--color-text-primary);
+/* --- COMMENT MODAL (Reuses CreatePostModal styles) --- */
+/* We will use the existing .modal-overlay and .modal-content from CreatePostModal.css */
+/* We just need to style the comment-specific parts */
+
+.comment-modal-body {
+  padding: 16px;
+  max-height: 400px; /* Set a max height for scrolling */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.comment strong {
-  margin-right: 6px;
+.comment-item {
+  display: flex;
+  gap: 10px;
+}
+
+.comment-avatar {
+  font-size: 2rem;
+  color: var(--color-text-secondary);
+}
+
+.comment-bubble {
+  background: rgba(128, 128, 128, 0.1);
+  padding: 8px 12px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.comment-bubble strong {
+  font-size: 0.9rem;
+}
+
+.comment-bubble p {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
 }
 
 .comment-form {
   display: flex;
-  gap: 8px;
-  margin-top: 8px;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border-top: 1px solid var(--color-border);
 }
 
 .comment-form input {
-  flex: 1;
+  flex-grow: 1;
+  background: rgba(128, 128, 128, 0.2);
   border: none;
   outline: none;
-  font-size: 14px;
+  padding: 10px 15px;
+  border-radius: 20px;
   color: var(--color-text-primary);
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 8px 12px;
-}
-
-.comment-form input::placeholder {
-  color: var(--color-text-secondary);
 }
 
 .comment-form button {
   background: none;
   border: none;
   color: var(--color-primary-brand);
-  font-weight: 600;
+  font-size: 1.2rem;
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: background-color 0.2s ease;
 }
-
-.comment-form button:hover {
-  background: rgba(0, 149, 246, 0.1);
-}
-
-.edit-post-section {
-  padding: 16px 20px;
-}
-
-.edit-post-section textarea {
-  width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 14px;
-  resize: vertical;
-  min-height: 80px;
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--color-text-primary);
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
-.edit-post-section textarea:focus {
-  border-color: var(--color-primary-brand);
-}
-
-.edit-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.edit-actions button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.edit-actions button:first-child {
-  background: var(--color-primary-brand);
-  color: white;
-}
-
-.edit-actions button:first-child:hover {
-  background: #0077cc;
-}
-
-.edit-actions button:last-child {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--color-text-primary);
-}
-
-.edit-actions button:last-child:hover {
-  background: rgba(255, 255, 255, 0.2);
+.comment-form button:disabled {
+  color: #aaa;
+  cursor: not-allowed;
 }

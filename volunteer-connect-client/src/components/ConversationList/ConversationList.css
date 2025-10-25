@@ -82,6 +82,32 @@
   border-radius: 50%;
   border: 2px solid var(--glass-bg);
 }
+.following-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-primary-brand);
+  border-radius: 50%;
+  border: 2px solid var(--glass-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.6rem;
+  color: white;
+}
+.following-suggestion {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-left: 3px solid var(--color-primary-brand);
+}
+.following-suggestion:hover {
+  background-color: rgba(59, 130, 246, 0.2);
+}
+.following-suggestion .convo-last-message {
+  color: var(--color-primary-brand);
+  font-style: italic;
+}
 .convo-details {
   flex-grow: 1;
   overflow: hidden;

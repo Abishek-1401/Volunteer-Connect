@@ -23,7 +23,7 @@ const ProjectCard = ({ project }) => {
           <FaMapMarkerAlt />
           <span>{project.location.address}</span>
         </div>
-        <Link to={`/projects/${project.id}`} className="details-button">
+        <Link to={`/projects/${project._id}`} className="details-button">
           View Details
         </Link>
       </div>
