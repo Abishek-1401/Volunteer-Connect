@@ -48,6 +48,11 @@
   background-color: var(--glass-border);
 }
 
+.notification-item.unread {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-left: 3px solid var(--color-primary-brand);
+}
+
 .notification-avatar {
   width: 40px;
   height: 40px;

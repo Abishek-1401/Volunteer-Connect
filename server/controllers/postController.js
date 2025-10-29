@@ -1,11 +1,12 @@
 // server/controllers/postController.js
 import Post from '../models/postModel.js'; // Use require
 import User from '../models/userModel.js'; // Use require
+import { createNotification } from './notificationController.js';
 // @desc    Create a new post
 // @route   POST /api/posts
 // @access  Private
 const createPost = async (req, res) => {
-  const { content, image } = req.body;
+  const { content, image, fileUrl, fileName, fileType } = req.body;
 
   if (!content) {
     return res.status(400).json({ message: 'Post content is required' });
@@ -16,9 +17,27 @@ const createPost = async (req, res) => {
       user: req.user.id, // User ID comes from the auth middleware
       content,
       image,
+      fileUrl,
+      fileName,
+      fileType,
     });
 
     const createdPost = await post.save();
+
+    // Create notifications for followers
+    const author = await User.findById(req.user.id).populate('following');
+    if (author.following && author.following.length > 0) {
+      for (const follower of author.following) {
+        await createNotification(
+          follower._id,
+          req.user.id,
+          'post',
+          `${req.user.name} created a new post`,
+          createdPost._id
+        );
+      }
+    }
+
     res.status(201).json(createdPost);
   } catch (error) {
     res.status(500).json({ message: 'Server Error: ' + error.message });
@@ -77,7 +96,7 @@ const likePost = async (req, res) => {
 // @route   PUT /api/posts/:id
 // @access  Private
 const updatePost = async (req, res) => {
-  const { content, image } = req.body;
+  const { content, image, fileUrl, fileName, fileType } = req.body;
 
   try {
     const post = await Post.findById(req.params.id);
@@ -94,6 +113,9 @@ const updatePost = async (req, res) => {
     // Update fields if provided
     post.content = content || post.content;
     post.image = image || post.image;
+    post.fileUrl = fileUrl || post.fileUrl;
+    post.fileName = fileName || post.fileName;
+    post.fileType = fileType || post.fileType;
 
     const updatedPost = await post.save();
     res.json(updatedPost);
@@ -169,6 +191,18 @@ const addComment = async (req, res) => {
     post.comments.push(newComment); // Add comment to the beginning of the array
 
     await post.save();
+
+    // Create notification for post author (if not self-commenting)
+    if (post.user.toString() !== req.user.id) {
+      await createNotification(
+        post.user,
+        req.user.id,
+        'comment',
+        `${req.user.name} commented on your post`,
+        post._id,
+        newComment._id
+      );
+    }
 
     // Optionally populate user info for the new comment before sending response
     const updatedPost = await Post.findById(req.params.id).populate('comments.user', 'name profileImage');

@@ -20,4 +20,7 @@ router.post('/', createConversation);
 // Get specific conversation
 router.get('/:id', getConversation);
 
+// Create group conversation
+router.post('/group', createConversation);
+
 export default router;

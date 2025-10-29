@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import User from './models/userModel.js';
 import Conversation from './models/conversationModel.js';
 import Message from './models/messageModel.js';
+import Project from './models/projectModel.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -22,6 +23,7 @@ const seedData = async () => {
     await User.deleteMany();
     await Conversation.deleteMany();
     await Message.deleteMany();
+    await Project.deleteMany();
 
     // Create users
     const users = await User.create([
@@ -133,7 +135,41 @@ const seedData = async () => {
     await convo2.save();
     await convo3.save();
 
-    console.log('Messages created:', messages.length);
+    // Create projects
+    const projects = await Project.create([
+      {
+        title: 'Community Garden Project',
+        description: 'Help us build a community garden in the local park. We need volunteers for planting, maintenance, and community outreach.',
+        tags: ['Environment', 'Community', 'Gardening'],
+        location: 'Central Park, New York',
+        eventDate: new Date('2024-06-15'),
+        organizer: user1._id,
+        participants: [user1._id, user2._id],
+        status: 'open'
+      },
+      {
+        title: 'Food Bank Distribution',
+        description: 'Assist in organizing and distributing food packages to families in need. Help sort donations and pack boxes.',
+        tags: ['Food', 'Charity', 'Organization'],
+        location: 'Downtown Community Center',
+        eventDate: new Date('2024-05-20'),
+        organizer: user2._id,
+        participants: [user2._id, user3._id],
+        status: 'open'
+      },
+      {
+        title: 'Youth Coding Workshop',
+        description: 'Teach basic programming skills to local youth. We need experienced developers to lead workshops and mentor students.',
+        tags: ['Education', 'Technology', 'Youth'],
+        location: 'Tech Hub Library',
+        eventDate: new Date('2024-07-10'),
+        organizer: user1._id,
+        participants: [user1._id],
+        status: 'open'
+      }
+    ]);
+
+    console.log('Projects created:', projects.length);
     console.log('Seeding completed successfully!');
     console.log('Login credentials:');
     console.log('Email: john@example.com, Password: password123');

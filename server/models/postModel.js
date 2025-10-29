@@ -14,6 +14,16 @@ const postSchema = new mongoose.Schema({
   image: {
     type: String, // URL to the image (if any)
   },
+  fileUrl: {
+    type: String, // URL to the uploaded file (if any)
+  },
+  fileName: {
+    type: String, // Original name of the uploaded file
+  },
+  fileType: {
+    type: String, // 'image' or 'file'
+    enum: ['image', 'file'],
+  },
   likes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

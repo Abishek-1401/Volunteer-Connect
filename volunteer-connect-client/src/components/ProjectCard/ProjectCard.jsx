@@ -9,7 +9,7 @@ const ProjectCard = ({ project }) => {
       <div className="project-card-header">
         <FaUserCircle className="organizer-avatar" />
         <div>
-          <span className="organizer-name">{project.organizer.name}</span>
+          <span className="organizer-name">{project.organizer?.name || 'Unknown Organizer'}</span>
           <span className="posted-time">posted 2 hours ago</span>
         </div>
       </div>

@@ -1,0 +1,234 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  background: rgba(128, 128, 128, 0.2);
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  background: rgba(128, 128, 128, 0.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--color-primary-brand);
+}
+
+.searching {
+  padding: 10px;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.user-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.user-item:hover {
+  background: rgba(128, 128, 128, 0.1);
+}
+
+.user-item.selected {
+  background: rgba(59, 130, 246, 0.1);
+  border-left: 3px solid var(--color-primary-brand);
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  display: block;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.user-email {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.check-icon {
+  color: var(--color-primary-brand);
+  font-size: 1.2rem;
+}
+
+.selected-users {
+  margin-top: 20px;
+}
+
+.selected-users h4 {
+  margin: 0 0 10px 0;
+  color: var(--color-text-primary);
+}
+
+.selected-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selected-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid var(--color-primary-brand);
+  border-radius: 20px;
+  padding: 6px 12px;
+}
+
+.user-avatar-small {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-btn:hover {
+  background: rgba(128, 128, 128, 0.2);
+  color: #e53935;
+}
+
+.modal-footer {
+  padding: 20px;
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cancel-btn,
+.create-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.cancel-btn {
+  background: rgba(128, 128, 128, 0.2);
+  border: 1px solid var(--glass-border);
+  color: var(--color-text-primary);
+}
+
+.cancel-btn:hover {
+  background: rgba(128, 128, 128, 0.3);
+}
+
+.create-btn {
+  background: var(--color-primary-brand);
+  border: none;
+  color: white;
+}
+
+.create-btn:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.create-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

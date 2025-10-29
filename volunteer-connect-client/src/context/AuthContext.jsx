@@ -3,6 +3,7 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
 
 // 1. Create the Context
 export const AuthContext = createContext();
@@ -12,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
+  const [socket, setSocket] = useState(null);
   const navigate = useNavigate();
 
   // Utility to set token for all axios requests
@@ -24,6 +26,31 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('token');
     }
   };
+
+  // Initialize socket connection
+  useEffect(() => {
+    if (token) {
+      const newSocket = io('http://localhost:5000', {
+        auth: {
+          token: token
+        }
+      });
+
+      setSocket(newSocket);
+
+      newSocket.on('connect', () => {
+        console.log('Connected to socket server');
+      });
+
+      newSocket.on('disconnect', () => {
+        console.log('Disconnected from socket server');
+      });
+
+      return () => {
+        newSocket.close();
+      };
+    }
+  }, [token]);
 
   // Load user data on app start
   const loadUser = useCallback(async () => {
@@ -75,6 +102,7 @@ export const AuthProvider = ({ children }) => {
     token,
     user,
     loading,
+    socket,
     register,
     login,
     logout,

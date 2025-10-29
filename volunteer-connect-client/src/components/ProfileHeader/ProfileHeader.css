@@ -69,3 +69,18 @@
   background-color: var(--color-primary-brand);
   color: white;
 }
+
+.follower-info {
+  margin-top: 12px;
+}
+
+.follower-count {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.follower-count.clickable:hover {
+  color: var(--color-primary-brand);
+}

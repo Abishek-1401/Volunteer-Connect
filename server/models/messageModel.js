@@ -20,6 +20,10 @@ const messageSchema = new mongoose.Schema({
     enum: ['text', 'image', 'file'],
     default: 'text',
   },
+  fileName: {
+    type: String,
+    default: null,
+  },
   readBy: [{
     user: {
       type: mongoose.Schema.Types.ObjectId,

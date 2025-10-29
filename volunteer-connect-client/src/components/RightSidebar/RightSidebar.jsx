@@ -72,11 +72,8 @@ const RightSidebar = () => {
   useEffect(() => {
     const fetchGroupSuggestions = async () => {
       try {
-        const response = await fetch('/api/groups/suggestions');
-        if (response.ok) {
-          const data = await response.json();
-          setGroupSuggestions(data);
-        }
+        const response = await axios.get('/api/groups/suggestions');
+        setGroupSuggestions(response.data);
       } catch (error) {
         console.error('Failed to fetch group suggestions:', error);
       } finally {

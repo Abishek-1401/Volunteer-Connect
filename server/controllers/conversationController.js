@@ -90,8 +90,6 @@ export const createConversation = async (req, res) => {
       participantIds = [];
     }
 
-
-
     // Determine conversation type
     const convoType = type || (isGroup ? 'group' : 'dm');
 
@@ -117,10 +115,26 @@ export const createConversation = async (req, res) => {
     await conversation.save();
 
     const populatedConvo = await Conversation.findById(conversation._id)
-      .populate('participants', 'name username')
+      .populate('participants', 'name username profileImage')
       .populate('createdBy', 'name username');
 
-    res.status(201).json(populatedConvo);
+    // Format the response to match the frontend expectations
+    const formattedConvo = {
+      id: populatedConvo._id,
+      type: populatedConvo.type,
+      name: populatedConvo.type === 'dm'
+        ? populatedConvo.participants.find(p => p._id.toString() !== userId)?.name || 'Unknown User'
+        : populatedConvo.name,
+      avatar: populatedConvo.type === 'dm'
+        ? populatedConvo.participants.find(p => p._id.toString() !== userId)?.profileImage || '/assets/default-avatar.png'
+        : null,
+      lastMessage: 'No messages yet',
+      time: '',
+      online: false,
+      participants: populatedConvo.participants,
+    };
+
+    res.status(201).json(formattedConvo);
   } catch (error) {
     console.error('Error creating conversation:', error);
     res.status(500).json({ msg: 'Server error' });

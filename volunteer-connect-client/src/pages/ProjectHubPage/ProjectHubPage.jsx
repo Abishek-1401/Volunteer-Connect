@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import Navbar from '../../components/Navbar/Navbar';
 import ProjectCard from '../../components/ProjectCard/ProjectCard';
 import ProjectFilter from '../../components/ProjectFilter/ProjectFilter';
@@ -17,17 +18,12 @@ const ProjectHubPage = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/projects');
-        if (response.ok) {
-          const data = await response.json();
-          setProjects(data);
-          setFilteredProjects(data);
-        } else {
-          showToast('Failed to load projects', 'error');
-        }
+        const response = await axios.get('/api/projects');
+        setProjects(response.data);
+        setFilteredProjects(response.data);
       } catch (error) {
         console.error('Error fetching projects:', error);
-        showToast('Network error. Please try again.', 'error');
+        showToast('Failed to load projects. Please try again.', 'error');
       } finally {
         setLoading(false);
       }

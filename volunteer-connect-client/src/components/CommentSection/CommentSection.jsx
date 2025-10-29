@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './CommentSection.css';
 import { FaUserCircle, FaPaperPlane } from 'react-icons/fa';
+import { AuthContext } from '../../context/AuthContext';
 
 // Mock comments - in a real app, you'd fetch this
 const mockComments = {
@@ -9,6 +10,7 @@ const mockComments = {
 };
 
 const CommentSection = ({ postId }) => {
+  const { user } = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
 
@@ -21,7 +23,7 @@ const CommentSection = ({ postId }) => {
     e.preventDefault();
     if (newComment.trim()) {
       // Add the new comment to the list (frontend only)
-      setComments([...comments, { user: 'You', text: newComment }]);
+      setComments([...comments, { user: user?.name || 'You', text: newComment }]);
       setNewComment('');
     }
   };

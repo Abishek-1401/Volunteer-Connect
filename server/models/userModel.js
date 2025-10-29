@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: '/assets/default-avatar.png',
   },
+  coverImage: {
+    type: String,
+    default: '/assets/cover-placeholder.svg',
+  },
   bio: {
     type: String,
     default: '',

@@ -97,6 +97,60 @@
   /* Image has no margin-top or border-radius */
 }
 
+/* File attachment styles */
+.post-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  background: rgba(128, 128, 128, 0.1);
+  border-radius: 8px;
+  margin: 0 15px 15px 15px;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-icon {
+  font-size: 2rem;
+}
+
+.file-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-name {
+  font-weight: 500;
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+}
+
+.file-size {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.file-download-btn {
+  background: var(--color-primary-brand);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.file-download-btn:hover {
+  background: #0056b3;
+}
+
 /* --- NEW ACTION BUTTONS & STATS --- */
 .post-actions {
   display: flex;
@@ -146,9 +200,53 @@
   padding: 0 15px 15px 15px; /* Bottom padding for the post */
 }
 
-/* --- HIDE THE OLD COMMENT SECTION --- */
+/* --- COMMENT SECTION STYLES --- */
 .comment-section {
-  display: none;
+  padding: 15px;
+  border-top: 1px solid var(--glass-border);
+  margin-top: 10px;
+}
+
+.comment {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.comment strong {
+  color: var(--color-text-primary);
+}
+
+.comment-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.comment-form input {
+  flex-grow: 1;
+  background: rgba(128, 128, 128, 0.2);
+  border: none;
+  outline: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  color: var(--color-text-primary);
+}
+
+.comment-form button {
+  background: var(--color-primary-brand);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.comment-form button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
 
 /* --- COMMENT MODAL (Reuses CreatePostModal styles) --- */

@@ -56,24 +56,42 @@ const MessengerPage = () => {
     } catch (error) {
       console.error('Error fetching messages:', error);
       showToast('Failed to load messages', 'error');
+      setMessages([]);
     } finally {
       setMessagesLoading(false);
     }
   };
 
+  const handleCreateGroup = async (groupData) => {
+    // Add the new group to conversations and select it
+    setConversations(prev => [groupData, ...prev]);
+    setSelectedConvoId(groupData.id);
+  };
+
+  const handleConvoClick = async (convoId) => {
+    if (convoId.startsWith('following-')) {
+      // This is a following suggestion, create a conversation first
+      const userId = convoId.replace('following-', '');
+      try {
+        const { data } = await axios.post('/api/conversations', {
+          type: 'dm',
+          participants: [userId]
+        });
+        // Add the new conversation to the list and select it
+        setConversations(prev => [data, ...prev.filter(c => !c.isFollowingSuggestion || c.id !== convoId)]);
+        setSelectedConvoId(data.id);
+      } catch (error) {
+        console.error('Error creating conversation:', error);
+        showToast('Failed to start conversation', 'error');
+      }
+    } else {
+      setSelectedConvoId(convoId);
+    }
+  };
+
   const selectedConvo = conversations.find(c => c.id === selectedConvoId);
 
-  // Add real-time message updates
-  useEffect(() => {
-    if (selectedConvoId) {
-      // Poll for new messages every 2 seconds
-      const interval = setInterval(() => {
-        fetchMessages(selectedConvoId);
-      }, 2000);
-
-      return () => clearInterval(interval);
-    }
-  }, [selectedConvoId]);
+  // Remove polling - messages will only refresh when sent
 
   const mockInfo = selectedConvo ? {
     type: selectedConvo.type,
@@ -105,7 +123,8 @@ const MessengerPage = () => {
         <ConversationList
           conversations={conversations}
           selectedConvoId={selectedConvoId}
-          onConvoClick={(id) => setSelectedConvoId(id)}
+          onConvoClick={handleConvoClick}
+          onCreateGroup={handleCreateGroup}
         />
         <ChatWindow
           conversation={selectedConvo}

@@ -2,7 +2,8 @@ import express from 'express';
 import {
   getMessages,
   sendMessage,
-  markAsRead
+  markAsRead,
+  upload
 } from '../controllers/messageController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -14,8 +15,8 @@ router.use(protect);
 // Get messages for a conversation
 router.get('/:conversationId', getMessages);
 
-// Send a message to a conversation
-router.post('/:conversationId', sendMessage);
+// Send a message to a conversation (with file upload support)
+router.post('/:conversationId', upload.single('file'), sendMessage);
 
 // Mark messages as read in a conversation
 router.put('/:conversationId/read', markAsRead);

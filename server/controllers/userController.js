@@ -1,6 +1,7 @@
 import User from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { createNotification } from './notificationController.js';
 
 // Helper function to generate a token
 const generateToken = (id) => {
@@ -129,6 +130,14 @@ const followUser = async (req, res) => {
     currentUser.following.push(req.params.id);
     await currentUser.save();
 
+    // Create notification for the followed user
+    await createNotification(
+      req.params.id,
+      req.user.id,
+      'follow',
+      `${req.user.name} started following you`
+    );
+
     res.json({ msg: 'User followed successfully' });
   } catch (error) {
     console.error(error.message);
@@ -156,6 +165,57 @@ const unfollowUser = async (req, res) => {
     await currentUser.save();
 
     res.json({ msg: 'User unfollowed successfully' });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+};
+
+// @desc    Get followers of a user
+// @route   GET /api/users/:id/followers
+// @access  Private
+const getFollowers = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    // Find users who have this user in their following list
+    const followers = await User.find({
+      following: req.params.id
+    }).select('name username profileImage');
+
+    res.json(followers);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+};
+
+// @desc    Update user profile
+// @route   PUT /api/users/update-profile
+// @access  Private
+const updateProfile = async (req, res) => {
+  try {
+    const { name, title, bio, skills } = req.body;
+    const updateData = { name, bio };
+
+    if (skills) {
+      updateData.skills = skills.split(',').map(skill => skill.trim());
+    }
+
+    if (req.files) {
+      if (req.files.profileImage) {
+        updateData.profileImage = `/uploads/${req.files.profileImage[0].filename}`;
+      }
+      if (req.files.coverImage) {
+        updateData.coverImage = `/uploads/${req.files.coverImage[0].filename}`;
+      }
+    }
+
+    const user = await User.findByIdAndUpdate(req.user.id, updateData, { new: true }).select('-password');
+    res.json(user);
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');
@@ -195,5 +255,7 @@ export {
   getUserSuggestions,
   followUser,
   unfollowUser,
+  getFollowers,
+  updateProfile,
   searchUsers,
 };
